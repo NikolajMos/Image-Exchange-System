@@ -1,0 +1,83 @@
+﻿<s:SurfaceWindow x:Class="ImageExchanger.SurfaceWindow1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="http://schemas.microsoft.com/surface/2008"
+    xmlns:r="clr-namespace:ImageExchanger"
+    Title="ImageExchanger " Loaded="SurfaceWindow_Loaded"  WindowState="Normal" 
+    Width="600" Height="800">
+      <Grid x:Name="ImageExchangeGrid">
+        
+        <s:TagVisualizer Name="MyTagVisualizer"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch"
+                         Background="Transparent"
+                         Height="Auto"
+                         Width="Auto"
+                         VisualizationAdded="OnVisualizationAdded"
+                         VisualizationRemoved="VisualizationRemoved">
+            <s:TagVisualizer.Definitions>
+                <s:TagVisualizationDefinition Value="0x1b"
+                                              Source="CameraVisualization.xaml"
+                                              LostTagTimeout="2000"
+                                              MaxCount="3"
+                                              OrientationOffsetFromTag="0"
+                                              PhysicalCenterOffsetFromTag="2,2"
+                                              TagRemovedBehavior="Fade"
+                                              UsesTagOrientation="True" />
+                <s:TagVisualizationDefinition Value="0xc0"
+                                              Source="CameraVisualization.xaml"
+                                              LostTagTimeout="2000"
+                                              MaxCount="3"
+                                              OrientationOffsetFromTag="0"
+                                              PhysicalCenterOffsetFromTag="2,2"
+                                              TagRemovedBehavior="Fade"
+                                              UsesTagOrientation="True" />
+                
+            </s:TagVisualizer.Definitions>
+           
+            <s:ScatterView Name="scatterView"
+                           ItemsSource="{Binding Path=scatterViewItems}"
+                           s:TagVisualizer.IsTagVisualizationHost="True"
+                           Background="Transparent"
+                           Height="750"
+                           Width="1500"
+                           PreviewMouseUp="dragDrop"
+                           PreviewTouchUp="dragDrop">
+                <s:ScatterView.Resources>
+                    <DataTemplate x:Name="ScatterviewItemDataTemplate"
+                                  DataType="{x:Type r:Watermark}">
+                        <Border Child="{Binding}"></Border>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type r:CameraVisualization}">
+                        <Border Child="{Binding}"></Border>
+                    </DataTemplate>
+                    <!--     <Style x:Key="CursorStyle"
+                           TargetType="{x:Type ContentControl}">
+                        <Setter Property="Opacity"
+                                Value="0.50" />
+                        <Setter Property="ContentTemplate"
+                                Value="{ScatterViewItemDataTemplate}" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ContentControl}">
+                                    <ContentPresenter Content="{TemplateBinding Content}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}">
+                                    </ContentPresenter>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="Tag"
+                                     Value="DragEnter">
+                                <Setter Property="Opacity"
+                                        Value="1.0" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>-->
+                </s:ScatterView.Resources>
+            </s:ScatterView>
+        </s:TagVisualizer>
+    </Grid>
+
+    <!-- </StackPanel>-->
+</s:SurfaceWindow>
